@@ -16,12 +16,12 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/coreprime/kbot/formats/gaf"
-	"github.com/coreprime/kbot/formats/gamedata/tak"
-	"github.com/coreprime/kbot/formats/pcx"
-	"github.com/coreprime/kbot/formats/tdf"
-	"github.com/coreprime/kbot/games"
-	"github.com/coreprime/kbot/internal/assets"
+	"github.com/coreprime/kbot-engine/games"
+	"github.com/coreprime/kbot-io/formats/gaf"
+	"github.com/coreprime/kbot-io/formats/gamedata/tak"
+	"github.com/coreprime/kbot-io/formats/pcx"
+	"github.com/coreprime/kbot-io/formats/tdf"
+	"github.com/coreprime/kbot-io/palettes"
 )
 
 func init() { games.Register(Game) }
@@ -85,7 +85,7 @@ func (a *adapter) Game() games.Game { return Game }
 // global is the last-resort palette when a side palette is missing.
 func (a *adapter) global() *gaf.Palette {
 	a.palOnce.Do(func() {
-		a.pal = games.GlobalPalette(a.fs, assets.DefaultPalette)
+		a.pal = games.GlobalPalette(a.fs, palettes.DefaultPalette)
 	})
 	return a.pal
 }
@@ -157,7 +157,7 @@ func (a *adapter) discoverPaletteSides() {
 			continue
 		}
 		name := ""
-		for kingdom := range assets.TAKPalettes {
+		for kingdom := range palettes.TAKPalettes {
 			if strings.HasPrefix(kingdom, strings.ToLower(pfx)) {
 				name = kingdom
 				break
@@ -300,7 +300,7 @@ func (a *adapter) TerrainPalette(mapPath string) color.Palette {
 }
 
 func kingdomPalette(kingdom string) color.Palette {
-	raw, ok := assets.TAKPalettes[kingdom]
+	raw, ok := palettes.TAKPalettes[kingdom]
 	if !ok {
 		return nil
 	}
@@ -483,7 +483,7 @@ func (a *adapter) Tilesets() []games.Tileset {
 		if s.name == "" {
 			continue
 		}
-		if _, ok := assets.TAKPalettes[s.name]; !ok {
+		if _, ok := palettes.TAKPalettes[s.name]; !ok {
 			continue
 		}
 		out = append(out, games.Tileset{
