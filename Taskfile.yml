@@ -42,24 +42,24 @@ tasks:
   vet:
     desc: Run go vet
     cmds:
-      - go vet .
+      - go vet ./takingdoms
 
   build:
     desc: Build the Go package
     cmds:
-      - go build .
+      - go build ./takingdoms
 
   test:
     desc: Run the Go tests (asset-gated tests skip cleanly)
     env:
       ALLOW_SKIP_ASSETS: 'true'
     cmds:
-      - go test .
+      - go test ./takingdoms
 
   lint:
     desc: Run golangci-lint (pinned to the CI version, assumed installed)
     cmds:
-      - golangci-lint run .
+      - golangci-lint run ./takingdoms
 
   # ---- JS ----
   js:
