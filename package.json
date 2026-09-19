@@ -1,7 +1,7 @@
 {
   "name": "@coreprime/kbot-game-takingdoms",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "TA: Kingdoms game adapter: shared-weapon script conventions, COB quick actions, branding, and welcome theming for KBot Studio.",
   "license": "MIT",
   "main": "src/index.js",
